@@ -1,38 +1,79 @@
-Role Name
+Statsite – Ansible Role
 =========
+[![Latest Version](http://img.shields.io/github/release/mtchavez/ansible-statsite.svg?style=flat-square)](https://github.com/mtchavez/ansible-statsite/releases)
+[![Build Status](https://travis-ci.org/mtchavez/ansible-statsite.svg?branch=master)](https://travis-ci.org/mtchavez/ansible-statsite)
 
-A brief description of the role goes here.
+
+Ansible role to manage the installation and setup of [Statsite][1].
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Ansible 1.7 or greater. A working Python install of 2.7 or greater to build.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Useful variables that you may want to override. The configuration can also be
+managed in your own role using the `ini` ansible module or writing your own
+template out.
+
+```
+statsite_name: "statsite"
+statsite_version: "0.7.1"
+statsite_package_url: "https://github.com/armon/statsite/archive/v{{statsite_version}}.tar.gz"
+statsite_install_script: "/usr/local/bin/install_statsite"
+statsite_binary_path: "/usr/local/bin/statsite{{statsite_version}}"
+statsite_etc_dir: "/etc/statsite"
+statsite_config_file: "{{statsite_etc_dir}}/{{statsite_name}}.conf"
+statsite_log_file: "/var/log/{{statsite_name}}.log"
+statsite_upstart_file: "/etc/init/{{statsite_name}}.conf"
+statsite_logrotate_file: "/etc/logrotate.d/{{statsite_name}}"
+statsite_group: "statsite"
+statsite_user: "{{statsite_group}}"
+
+#
+# Config
+#
+
+# [statsite]
+statsite_port: 8125
+statsite_udp_port: 8125
+statsite_log_level: "WARN"
+statsite_flush_interval: 10
+statsite_timer_eps: 0.01
+statsite_set_eps: 0.02
+statsite_stream_cmd: ""
+statsite_daemonize: 0
+statsite_binary_stream: false
+statsite_pid_dir: "/var/run/statsite"
+statsite_pidfile: "{{statsite_pid_dir}}/{{statsite_name}}.pid"
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No role dependencies.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Using the role in a playbook is as simple as adding the role. Pass in variables
+you want to override or you can manage the statsite config in a separate role.
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - role: mtchavez.statsite
+         - { role: mtchavez.statsite, statsite_version: "1.7.0" }
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+El Chavo - mtchavez - 2015
+
+[1]: https://github.com/armon/statsite
