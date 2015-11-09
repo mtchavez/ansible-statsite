@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# Install statsite
+#
+
+set -e
+
+pushd /tmp > /dev/null
+# Get statsite and un-package archive
+wget {{statsite_package_url}}
+tar xfvz v{{statsite_version}}.tar.gz
+
+# Change into statsite archive and build binary
+pushd statsite-{{statsite_version}} > /dev/null
+scons
+mv statsite {{statsite_binary_path}}
+popd # pop statsite-{{statsite_version}}
+popd # pop /tmp
+
+# vim: ft=sh:

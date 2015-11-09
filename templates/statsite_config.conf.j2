@@ -1,0 +1,15 @@
+[statsite]
+port=8125
+udp_port=8125
+log_level=INFO
+flush_interval=10
+timer_eps=0.01
+set_eps=0.02
+stream_cmd={{statsite_stream_cmd}}
+daemonize={{statsite_daemonize}}
+{% if statsite_binary_stream %}
+binary_stream=yes
+{% endif %}
+{% if statsite_daemonize == 1 %}
+pid_file={{statsite_pidfile}}
+{% endif %}

@@ -1,0 +1,9 @@
+description "Statsite aggregates stats."
+
+start on runlevel [23]
+
+respawn
+
+exec su -m -l -c "{{statsite_binary_path}} -f {{statsite_config_file}}" \
+  {{statsite_user}} \
+  >> {{statsite_log_file}} 2>&1

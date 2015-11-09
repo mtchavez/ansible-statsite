@@ -1,2 +1,8 @@
 ---
-# handlers file for statsite
+
+- name: restart statsite
+  service:
+    name: "{{statsite_name}}"
+    state: restarted
+  tags:
+    - statsite

@@ -1,2 +1,101 @@
 ---
-# tasks file for statsite
+
+- name: Add statsite group
+  group:
+    name: "{{statsite_group}}"
+    state: present
+  tags:
+    - statsite
+
+- name: Add statsite user
+  user:
+    name: "{{statsite_user}}"
+    group: "{{statsite_group}}"
+    state: present
+  tags:
+    - statsite
+
+- name: Install statsite apt pkgs
+  apt:
+    pkg: "{{item}}"
+    state: present
+    update_cache: yes
+  with_items: statsite_apt_pkgs
+  tags:
+    - statsite
+
+- name: Add install script
+  template:
+    src: statsite_install.j2
+    dest: "{{statsite_install_script}}"
+    mode: 0755
+  tags:
+    - statsite
+
+- name: Check binary exists for statsite version
+  raw: /usr/bin/test -f {{statsite_binary_path}}
+  register: has_statsite_binary
+  ignore_errors: True
+  tags:
+    - statsite
+
+- name: "Download statsite version {{statsite_version}}"
+  command: "{{statsite_install_script}}"
+  when: has_statsite_binary|failed
+  notify: restart statsite
+  tags:
+    - statsite
+
+- name: Write upstart file
+  template:
+    src: statsite_upstart.conf.j2
+    dest: "{{statsite_upstart_file}}"
+    group: "{{statsite_group}}"
+    owner: "{{statsite_user}}"
+  notify: restart statsite
+  tags:
+    - statsite
+
+- name: Statsite etc dir
+  file:
+    path: "{{statsite_etc_dir}}"
+    state: directory
+    group: "{{statsite_group}}"
+    owner: "{{statsite_user}}"
+  tags:
+    - statsite
+
+- name: Statsite pid dir
+  file:
+    path: "{{statsite_pid_dir}}"
+    state: directory
+    group: "{{statsite_group}}"
+    owner: "{{statsite_user}}"
+  when: statsite_daemonize == 1
+  tags:
+    - statsite
+
+- name: Write config file
+  template:
+    src: statsite_config.conf.j2
+    dest: "{{statsite_config_file}}"
+    force: no
+    group: "{{statsite_group}}"
+    owner: "{{statsite_user}}"
+  notify: restart statsite
+  tags:
+    - statsite
+
+- name: Ensure statsite started
+  service:
+    name: "{{statsite_name}}"
+    state: started
+  tags:
+    - statsite
+
+- name: Configure logrotate
+  template:
+    src: statsite_logrotate.j2
+    dest: "{{statsite_logrotate_file}}"
+  tags:
+    - statsite
