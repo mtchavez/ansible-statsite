@@ -39,7 +39,7 @@
   tags:
     - statsite
 
-- name: "Download statsite version {{statsite_version}}"
+- name: Run install statsite script
   command: "{{statsite_install_script}}"
   when: has_statsite_binary|failed
   notify: restart statsite
