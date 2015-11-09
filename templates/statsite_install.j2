@@ -14,6 +14,11 @@ tar xfvz v{{statsite_version}}.tar.gz
 pushd statsite-{{statsite_version}} > /dev/null
 scons
 mv statsite {{statsite_binary_path}}
+
+# Rsync sinks
+rsync -av ./sinks {{statsite_etc_sinks}}
+chown {{statsite_group}}:{{statsite_user}} {{statsite_etc_sinks}}
+
 popd # pop statsite-{{statsite_version}}
 popd # pop /tmp
 

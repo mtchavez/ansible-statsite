@@ -8,6 +8,7 @@ statsite_package_url: "https://github.com/armon/statsite/archive/v{{statsite_ver
 statsite_install_script: "/usr/local/bin/install_statsite"
 statsite_binary_path: "/usr/local/bin/statsite{{statsite_version}}"
 statsite_etc_dir: "/etc/statsite"
+statsite_etc_sinks: "{{statsite_etc_dir}}/sinks"
 statsite_config_file: "{{statsite_etc_dir}}/{{statsite_name}}.conf"
 statsite_log_file: "/var/log/{{statsite_name}}.log"
 statsite_upstart_file: "/etc/init/{{statsite_name}}.conf"
