@@ -1,0 +1,23 @@
+---
+
+driver:
+  name: docker
+
+platforms:
+  - name: "ubuntu-14.04"
+
+verifier:
+  name: serverspec
+
+suites:
+  - name: default
+    provisioner:
+      name: ansible_playbook
+      playbook: role.yml
+      hosts: hosts
+      ansible_extra_flags: "<%= ENV['ANSIBLE_EXTRA_FLAGS'] %>"
+      additional_copy_path:
+        - "."
+    verifier:
+      patterns:
+        - "./spec/*_spec.rb"
