@@ -24,7 +24,7 @@ statsite_user: "statsite"
 # [statsite]
 statsite_port: 8125
 statsite_udp_port: 8125
-statsite_log_level: "WARN"
+statsite_log_level: "INFO"
 statsite_flush_interval: 10
 statsite_timer_eps: 0.01
 statsite_set_eps: 0.02

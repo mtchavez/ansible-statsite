@@ -2,7 +2,7 @@
 
 - name: restart statsite
   service:
-    name: "{{statsite_name}}"
+    name: "{{ statsite_name }}"
     state: restarted
   tags:
     - statsite
