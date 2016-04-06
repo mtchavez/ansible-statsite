@@ -40,7 +40,7 @@
     - statsite
 
 - name: Run install statsite script
-  command: "{{ statsite_install_script }}"
+  command: "sudo {{ statsite_install_script }}"
   when: has_statsite_binary|failed
   notify: restart statsite
   tags:
