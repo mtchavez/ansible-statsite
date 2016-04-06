@@ -20,7 +20,7 @@
     pkg: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: statsite_apt_pkgs
+  with_items: "{{ statsite_apt_pkgs }}"
   tags:
     - statsite
 
