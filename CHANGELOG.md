@@ -1,3 +1,9 @@
+# Unreleased
+
+* Add all configuration variables to config file
+* Use `statsite_name` in binary name
+* Move vars to defaults
+
 # v0.0.3 – 2015 11-09
 
 * Fix rsync of sinks dir
