@@ -15,8 +15,6 @@ pushd statsite-{{ statsite_version }} > /dev/null
 scons
 mv -f statsite {{ statsite_binary_path }}
 
-mkdir -p {{ statsite_etc_dir }}
-
 # Rsync sinks
 sudo rsync -av sinks {{ statsite_etc_sinks }}
 sudo chown {{ statsite_group }}:{{ statsite_user }} {{ statsite_etc_sinks }}
