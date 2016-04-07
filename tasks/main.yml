@@ -20,7 +20,7 @@
     pkg: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: statsite_apt_pkgs
+  with_items: "{{ statsite_apt_pkgs }}"
   tags:
     - statsite
 
@@ -39,19 +39,11 @@
   tags:
     - statsite
 
-- name: Run install statsite script
-  command: "{{ statsite_install_script }}"
-  when: has_statsite_binary|failed
-  notify: restart statsite
-  tags:
-    - statsite
-
 - name: Write upstart file
   template:
     src: statsite_upstart.conf.j2
     dest: "{{ statsite_upstart_file }}"
-    group: "{{ statsite_group }}"
-    owner: "{{ statsite_user }}"
+    mode: 0644
   notify: restart statsite
   tags:
     - statsite
@@ -65,6 +57,15 @@
   tags:
     - statsite
 
+- name: Statsite log dir
+  file:
+    path: "{{ statsite_log_dir }}"
+    state: directory
+    group: "{{ statsite_group }}"
+    owner: "{{ statsite_user }}"
+  tags:
+    - statsite
+
 - name: Statsite pid dir
   file:
     path: "{{ statsite_pid_dir }}"
@@ -72,6 +73,13 @@
     group: "{{ statsite_group }}"
     owner: "{{ statsite_user }}"
   when: statsite_daemonize == 1
+  tags:
+    - statsite
+
+- name: Run install statsite script
+  command: "sudo {{ statsite_install_script }}"
+  when: has_statsite_binary|failed
+  notify: restart statsite
   tags:
     - statsite
 
