@@ -3,7 +3,7 @@ galaxy_info:
   author: mtchavez
   description: Statsite
   license: MIT
-  min_ansible_version: 1.7
+  min_ansible_version: 1.9
   platforms:
     - name: Ubuntu
       versions:
