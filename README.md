@@ -1,18 +1,15 @@
-Statsite – Ansible Role
-=========
+# Statsite – Ansible Role
 [![Latest Version](http://img.shields.io/github/release/mtchavez/ansible-statsite.svg?style=flat-square)](https://github.com/mtchavez/ansible-statsite/releases)
 [![Build Status](https://travis-ci.org/mtchavez/ansible-statsite.svg?branch=master)](https://travis-ci.org/mtchavez/ansible-statsite)
 
 
 Ansible role to manage the installation and setup of [Statsite][1].
 
-Requirements
-------------
+## Requirements
 
 Ansible 1.7 or greater. A working Python install of 2.7 or greater to build.
 
-Role Variables
---------------
+## Role Variables
 
 Useful variables that you may want to override. The configuration can also be
 managed in your own role using the `ini` ansible module or writing your own
@@ -50,13 +47,11 @@ statsite_pid_dir: "/var/run/statsite"
 statsite_pidfile: "{{statsite_pid_dir}}/{{statsite_name}}.pid"
 ```
 
-Dependencies
-------------
+## Dependencies
 
 No role dependencies.
 
-Example Playbook
-----------------
+## Example Playbook
 
 Using the role in a playbook is as simple as adding the role. Pass in variables
 you want to override or you can manage the statsite config in a separate role.
@@ -66,13 +61,11 @@ you want to override or you can manage the statsite config in a separate role.
          - role: mtchavez.statsite
          - { role: mtchavez.statsite, statsite_version: "1.7.0" }
 
-License
--------
+## License
 
 MIT
 
-Author Information
-------------------
+## Author Information
 
 El Chavo - mtchavez - 2015
 
